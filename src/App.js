@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import TaskListTable from './components/TaskListTable';
 
 class App extends Component {
  // constructor(props) {
@@ -12,6 +13,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Navbar />
+          <TaskListTable />
         </div>
       </BrowserRouter>
     );
