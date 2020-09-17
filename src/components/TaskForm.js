@@ -77,7 +77,7 @@ class TaskForm extends Component {
                     </div>
                     <button type="submit" className="btn btn-primary">{this.state.buttonName}</button>
                     &nbsp; &nbsp;
-                    <button type="button" className="btn btn-danger">Cancelar</button>
+                    <button type="button" className="btn btn-danger" onClick={() => this.setState({ redirect: true })}>Cancelar</button>
                 </form>
             </div>
         );
