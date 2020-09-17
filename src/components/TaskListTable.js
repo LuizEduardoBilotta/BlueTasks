@@ -80,8 +80,8 @@ const TableBody = (props) => {
             { props.tasks.map(task => 
                 <tr key={task.id}>
                     <td><input type="checkbox" checked={ task.done } onChange={() => props.onStatusChange(task)}/></td>
-                    <td>{ task.description }</td>
-                    <td>{ task.whenToDo }</td>
+                    <td>{ task.done ? <s>{ task.description }</s> : task.description }</td>
+                    <td>{ task.done ? <s>{ task.whenToDo }</s> : task.whenToDo }</td>
                     <td>
                         <input type="button" className="btn btn-primary" value="Editar" />
                         &nbsp;<input type="button" className="btn btn-danger" value="Excluir" onClick={() => props.onDelete(task.id)}/>
