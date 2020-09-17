@@ -1,39 +1,65 @@
 import React, { Component } from 'react';
+import TaskService from '../api/TaskService';
 
 class TaskListTable extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            tasks: []
+        }
+    }
+    
+    
     render() {
         return (
             <div>
-                <table>
+                <table className="table table-striped">
                     <TableHeader />
-                    <TableBody />
+                    <TableBody tasks={this.state.tasks}/>
                 </table>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.listTasks();
+    }
+
+    listTasks() {
+        this.setState({ tasks: TaskService.list() });
     }
 }
 
 const TableHeader = () => {
     return (
-        <thead>
+        <thead className="thead-dark">
             <tr>
-                <td>Status</td>
-                <td>Descrição</td>
-                <td>Data</td>
-                <td>Ações</td>
+                <th scope="col">Status</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Data</th>
+                <th scope="col">Ações</th>
             </tr>
         </thead>
     )
 }
 
-const TableBody = () => {
+const TableBody = (props) => {
     return (
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        <tbody>
+            { props.tasks.map(task => 
+                <tr key={task.id}>
+                    <td><input type="checkbox" checked={ task.done }/></td>
+                    <td>{ task.description }</td>
+                    <td>{ task.whenToDo }</td>
+                    <td>
+                        <input type="button" className="btn btn-primary" value="Editar" />
+                        &nbsp;<input type="button" className="btn btn-danger" value="Excluir" />
+                    </td>
+                </tr>
+            )}
+        </tbody>
+        
     )
 }
 
