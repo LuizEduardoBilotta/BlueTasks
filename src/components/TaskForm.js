@@ -33,6 +33,14 @@ class TaskForm extends Component {
         this.setState(prevState => ({ task: { ...prevState.task, [field]: value }}));
     }
 
+    componentDidMount() {
+        const editId = this.props.match.params.id;
+        if (editId) {
+            const task = TaskService.load(~~editId);
+            this.setState({ task: task });
+        }
+    }
+
     render() {
         if (this.state.redirect) {
             return <Redirect to ="/" />
@@ -49,6 +57,7 @@ class TaskForm extends Component {
                             type="text"
                             className="form-control"
                             name="description"
+                            value={ this.state.task.description }
                             placeholder="Digite a descrição da tarefa..." 
                             onChange={this.onInputChangeHandler}   
                         />
@@ -60,6 +69,7 @@ class TaskForm extends Component {
                             type="date"
                             className="form-control"
                             name="whenToDo"
+                            value={ this.state.task.whenToDo }
                             placeholder="Digite a data da tarefa..."
                             onChange={this.onInputChangeHandler}
                         />
