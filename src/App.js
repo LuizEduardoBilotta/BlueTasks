@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import TaskForm from './components/TaskForm';
 import TaskListTable from './components/TaskListTable';
 
 class App extends Component {
@@ -13,9 +14,11 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Navbar />
-          <div className="container" style={{ marginTop: 20 }}>
-            <TaskListTable />
-          </div>  
+          <div className="container" style={{ marginTop: 20 }} />
+          <Switch>
+            <Route exact path="/form" component={ TaskForm } />
+            <Route path="/" component={ TaskListTable } />
+          </Switch>  
         </div>
       </BrowserRouter>
     );
