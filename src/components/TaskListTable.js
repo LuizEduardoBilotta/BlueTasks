@@ -12,6 +12,7 @@ class TaskListTable extends Component {
         }
 
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
+        this.onStatusChangeHandler = this.onStatusChangeHandler.bind(this);
     }
     
     
@@ -20,11 +21,12 @@ class TaskListTable extends Component {
             <div>
                 <table className="table table-striped">
                     <TableHeader />
-                    
+
                     {this.state.tasks.length > 0 ?
                         <TableBody 
                             tasks={this.state.tasks}
                             onDelete={this.onDeleteHandler}
+                            onStatusChange={this.onStatusChangeHandler}
                         />
                         :
                         <EmptyTableBody />
@@ -51,6 +53,12 @@ class TaskListTable extends Component {
             toast.success("Tarefa excluída!", { position: toast.POSITION.BOTTOM_LEFT })
         }
     }
+
+    onStatusChangeHandler(task) {
+        task.done = !task.done;
+        TaskService.save(task);
+        this.listTasks();
+    }
 }
 
 const TableHeader = () => {
@@ -71,7 +79,7 @@ const TableBody = (props) => {
         <tbody>
             { props.tasks.map(task => 
                 <tr key={task.id}>
-                    <td><input type="checkbox" checked={ task.done }/></td>
+                    <td><input type="checkbox" checked={ task.done } onChange={() => props.onStatusChange(task)}/></td>
                     <td>{ task.description }</td>
                     <td>{ task.whenToDo }</td>
                     <td>
