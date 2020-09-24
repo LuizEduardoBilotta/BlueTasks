@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Redirect } from 'react-router-dom';
 import Alert from './Alert';
 import AuthService from '../api/AuthService';
+import Spinner from './Spinner';
 
 class TaskListTable extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class TaskListTable extends Component {
 
         this.state = {
             tasks: [],
-            editId: 0
+            editId: 0,
+            loading: false
         }
 
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
@@ -33,6 +35,8 @@ class TaskListTable extends Component {
         return (
             <div className="container">
                 <Alert message="Este é um alerta de teste " />
+
+                { this.state.loading ? <Spinner /> : 
                 <table className="table table-striped">
                     <TableHeader />
 
@@ -47,6 +51,7 @@ class TaskListTable extends Component {
                         <EmptyTableBody />
                     }        
                 </table>
+                }
                 <ToastContainer autoClose={1500}/>
             </div>
         );
