@@ -14,7 +14,8 @@ class TaskListTable extends Component {
         this.state = {
             tasks: [],
             editId: 0,
-            loading: false
+            loading: false,
+            alert: null
         }
 
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
@@ -34,8 +35,8 @@ class TaskListTable extends Component {
 
         return (
             <div className="container">
-                <Alert message="Este é um alerta de teste " />
-
+                <h1>Lista de Tarefas</h1>
+                { this.state.alert != null ? <Alert message={this.state.alert} /> : "" }
                 { this.state.loading ? <Spinner /> : 
                 <table className="table table-striped">
                     <TableHeader />
@@ -62,7 +63,19 @@ class TaskListTable extends Component {
     }
 
     listTasks() {
-        this.setState({ tasks: TaskService.list() });
+        if (!AuthService.isAuthenticated) {
+            return;
+        }
+
+        this.setState({ loading: true });
+        TaskService.list(
+            tasks => this.setState({ tasks: tasks, loading: false }),
+            error => this.setState(error)
+        );
+    }
+
+    setErrorState(error) {
+        this.state({ alert: `Erro na requisição: ${error.message}`, loading: false })
     }
 
     onDeleteHandler(id) {
