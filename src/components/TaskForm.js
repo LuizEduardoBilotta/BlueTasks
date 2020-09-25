@@ -28,8 +28,16 @@ class TaskForm extends Component {
     
     onSubmitHandler(event) {
         event.preventDefault();
-        TaskService.save(this.state.task);
-        this.setState({ redirect: true });
+
+        TaskService.save(this.state.task,
+            () => this.setState({ redirect: true }),
+            error => {
+                if (error.response) {
+                    this.setErrorState(`Erro: ${error.response.data.error}`);
+                } else {
+                    this.setErrorState(`Erro na requisição: ${error.message}`);
+                }
+            });
     }
 
     onInputChangeHandler(event) {
@@ -55,7 +63,7 @@ class TaskForm extends Component {
                         }
                     
                     } else {
-                        this.setErrorState({ alert: `Erro na requisição: ${error.message}`, loading: false })
+                        this.setErrorState(`Erro na requisição: ${error.message}`);
                     }
                 });
         }
