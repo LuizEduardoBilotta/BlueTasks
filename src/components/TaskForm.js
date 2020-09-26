@@ -119,7 +119,7 @@ class TaskForm extends Component {
                     <button 
                         type="submit" 
                         className="btn btn-primary"
-                        disable={this.state.saving}>
+                        disable={this.state.saving.toString()}>
                             { 
                                 this.state.saving ?
                                     <span 
