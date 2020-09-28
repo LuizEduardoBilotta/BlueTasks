@@ -9,10 +9,10 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.onRefreshhandler = this.onRefreshhandler.bind(this);
+    this.onRefreshHandler = this.onRefreshHandler.bind(this);
   }
 
- onRefreshhandler() {
+ onRefreshHandler() {
    this.forceUpdate();
  }
 
@@ -20,10 +20,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Navbar />
+          <Navbar onLinkClick={ this.onRefreshHandler } />
           <div className="container" style={{ marginTop: 20 }} />
           <Switch>
-            <Route exact path="/login" render={() => <Login onLoginSuccess={ this.onRefreshhandler() }/>} />
+            <Route exact path="/login" render={() => <Login onLoginSuccess={ this.onRefreshHandler }/>} />
             <Route exact path="/form" component={ TaskForm } />
             <Route exact path="/form/:id" component={ TaskForm } />
             <Route path="/" component={ TaskListTable } />
