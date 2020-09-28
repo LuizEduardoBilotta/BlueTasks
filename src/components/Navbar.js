@@ -60,6 +60,10 @@ class Navbar extends Component {
                             }
                         </div>
                     </div>
+                    <span className="navbar-text">
+                            { AuthService.isAuthenticated()  ?
+                                `Olá, ${ AuthService.getJwtTokenData().displayName }!` : "" }
+                    </span>
                 </nav>
             </div>
         );
